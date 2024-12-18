@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "next-themes";
+import { Toaster } from "@/components/ui/toaster";
+import ReactQueryProvider from "./ReactQueryProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,10 +27,25 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      {/* shadcn切换主题，其实就是给根组件切换classname */}
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ReactQueryProvider>
+          <ThemeProvider
+            //使用转变主题的属性
+            attribute="class"
+            //默认值
+            defaultTheme="system"
+            // 是否允许跟随系统
+            enableSystem
+            //转换时是否有过渡
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </ReactQueryProvider>
+        <Toaster></Toaster>
       </body>
     </html>
   );

@@ -1,0 +1,78 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String    @id
+  username     String    @unique
+  displayName  String
+  email        String?   @unique
+  passwordHash String?
+  googleId     String?   @unique
+  avatarUrl    String?
+  bio          String?
+  sessions     Session[]
+  posts        Post[]
+
+  createdAt DateTime @default(now())
+  //followers：表示关注该用户的用户列表，通过 Follow 模型的 following 关系进行连接。
+  //关注列表
+  following Follow[] @relation("Following")
+  //following：表示该用户关注的用户列表，通过 Follow 模型的 follower 关系进行连接。
+  //被关注列表
+  followers Follow[] @relation("Followers")
+
+  @@map("users")
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  expiresAt DateTime
+  // 与user表联系
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model Post {
+  id      String @id @default(cuid())
+  content String
+
+  // userId,与user关联
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createAt DateTime @default(now())
+
+  @@map("posts")
+}
+
+model Follow {
+  // 多对多其实就是会生成一个中间表，比如这里，生成follow中间表，这个表指向谁关注的 与指向谁被关注
+
+  // 与users表的多对多关系，这个表中保存两个userId，一个表示关注者，一个表示被关注者
+  // 将生成以下表：
+  // 列名	类型	约束
+  // followerId	String	FOREIGN KEY → users.id
+  // followingId	String	FOREIGN KEY → users.id
+
+  //保存关注者的userId和User实例
+  // 谁关注
+  followerId String
+  follower   User   @relation("Followers", fields: [followerId], references: [id], onDelete: Cascade)
+
+  // 谁 被关注
+  followingId String
+  following   User   @relation("Following", fields: [followingId], references: [id], onDelete: Cascade)
+
+  // 确保相同用户之间只能有一条关注关系，防止重复关注
+  @@unique([followerId, followingId])
+  @@map("follows")
+}
