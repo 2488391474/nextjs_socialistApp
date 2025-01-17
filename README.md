@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# bugbook
 
-## Getting Started
+### 技术栈：react  nextjs  react-query react-hook-form zod lucia-auth tailwindcss
 
-First, run the development server:
+### 实现功能： 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. 登录，退出，注册
+2. 修改个人信息
+3. 关注对象
+4. 乐观更新关注对象时 对应的按钮样式改变
+5. 加载骨架屏
+6. 显示推荐帖子
+7. 显示关注对象帖子
+8. 趋势话题
+9. 切换深色模式
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+登录页：
+![alt text](./mdsource/image-1.png)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+注册页：
+![alt text](./mdsource/image-4.png)
 
-## Learn More
+首页：
+![alt text](./mdsource/image.png)
 
-To learn more about Next.js, take a look at the following resources:
+深色模式界面：
+![alt text](./mdsource/image-1.png)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+修改信息界面:
+![alt text](./mdsource/image-2.png)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+修改信息内容界面：
+![alt text](./mdsource/image-3.png)

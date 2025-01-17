@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
+import { withUt } from "uploadthing/tw";
 
-export default {
+const config = {
   // 在根元素上面添加.dark class
   darkMode: ["class"],
   // 指定tailwindcss 应该扫描到的位置
@@ -12,7 +13,7 @@ export default {
   theme: {
     // 拓展tailwind默认的配置
     extend: {
-        // 这里配置的内容，通过xx-定义的属性 来使用 如 bg-card 
+      // 这里配置的内容，通过xx-定义的属性 来使用 如 bg-card
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
@@ -55,7 +56,7 @@ export default {
           "5": "hsl(var(--chart-5))",
         },
       },
-      // 这里的内容则是这样用 rounded-sm 
+      // 这里的内容则是这样用 rounded-sm
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
@@ -65,3 +66,5 @@ export default {
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;
+
+export default withUt(config);

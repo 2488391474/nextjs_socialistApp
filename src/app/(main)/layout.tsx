@@ -19,7 +19,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
             {children}
           </div>
         </div>
-        <MenuBar className="fixed bottom-0 left-0 flex w-full justify-center gap-5 border-t p-3 sm:hidden"></MenuBar>
+        <MenuBar className="fixed bottom-0 left-0 flex w-full justify-center gap-5 border-t p-3"></MenuBar>
       </SessionProvider>
     </>
   );

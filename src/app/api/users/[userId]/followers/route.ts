@@ -1,7 +1,6 @@
 import { validateRequest } from "@/auth";
 import prisma from "@/lib/prisma";
 import { FollowerInfo } from "@/lib/types";
-import { use } from "react";
 
 //获取指定用户的粉丝数量 与是否已经关注
 export async function GET(
@@ -14,6 +13,7 @@ export async function GET(
       return Response.json({ error: "Unauthrize" }, { status: 401 });
     }
 
+    
     //                              查询唯一的用户记录
     const user = await prisma.user.findUnique({
       where: { id: userId },
@@ -99,8 +99,7 @@ export async function DELETE(
         followingId: userId,
       },
     });
-    return new Response()
-
+    return new Response();
   } catch (error) {
     console.error(error);
     return Response.json({ error: "Interval server error" }, { status: 500 });

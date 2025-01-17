@@ -6,8 +6,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import FollowingFeed from "./FollowingFeed";
 const Page = async () => {
   return (
-    <main className="h-[200vh] w-full bg-red-50 flex">
-      <div className="w-full min-w-0 space-y-5">
+    <main className="h-[200vh] w-full flex">
+      <div className="w-full min-w-0 space-y-5 mr-[50px]">
         <PostEditor></PostEditor>
         {/* <ForYouFeed></ForYouFeed> */}
 

@@ -7,11 +7,14 @@ import {
 } from "@tanstack/react-query";
 import { submitPost } from "./action";
 import { PostsPage } from "@/lib/types";
+import { useSession } from "@/app/(main)/SessionProvider";
 
 export function useSubmitPostMutation() {
   const { toast } = useToast();
 
   const queryClient = useQueryClient();
+
+  const { user } = useSession();
 
   //  数据类型为：{pages[],cursor}
 
@@ -21,7 +24,18 @@ export function useSubmitPostMutation() {
     // 当成功更新会执行这个回调
     onSuccess: async (newPost) => {
       // 获取缓存信息
-      const queryFilter = { queryKey: ["post-feed", "for-you"] };
+      const queryFilter = {
+        queryKey: ["post-feed", "for-you"],
+        predicate(query) {
+          return (
+            query.queryKey.includes("for-you") ||
+            (query.queryKey.includes("user-posts") &&
+              query.queryKey.includes(user.id))
+          );
+        },
+
+        //satisfies QueryFilters和直接告诉为QueryFilters的区别是，staisfies将保留字面量，不会将其变为QueryFilters类型
+      } satisfies QueryFilters;
       // 取消缓存信息，防止用户在更新之后 页面继续使用过时的数据
       await queryClient.cancelQueries(queryFilter);
 
@@ -53,10 +67,12 @@ export function useSubmitPostMutation() {
       //  标记数据是否失效的函数，若失效会重新触发请求来拿取数据
       queryClient.invalidateQueries({
         queryKey: queryFilter.queryKey,
+
+        // 满足条件的将缓存失效 即重新发起请求
         // 若predicate返回true,则为标记数据已经失效，即触发重新请求
         predicate(query) {
           // 有数据时返回false
-          return !query.state.data;
+          return queryFilter.predicate(query) && !query.state.data;
         },
       });
 

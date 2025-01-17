@@ -9,8 +9,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 // import Comments from "../comments/Comments";
-// import Linkify from "../Linkify";
+import Linkify from "../Linkify";
 import UserAvatar from "../UserAvatar";
+import UserTooltip from "../UserTooltip";
 // import UserTooltip from "../UserTooltip";
 // import BookmarkButton from "./BookmarkButton";
 // import LikeButton from "./LikeButton";
@@ -26,7 +27,14 @@ export default function Post({ post }: PostProps) {
   return (
     <>
       <article className="group/post space-y-3 rounded-2xl bg-card p-5 shadow-sm">
-        {post.content}
+        <div>
+          <UserTooltip user={post.user}>
+            <Link href={`/users/${post.user.username}`}>
+              <UserAvatar avatarUrl={post.user.avatarUrl} />
+            </Link>
+          </UserTooltip>
+        </div>
+        <Linkify>{post.content}</Linkify>
       </article>
     </>
   );

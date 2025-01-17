@@ -12,7 +12,6 @@ export async function GET(req: NextRequest) {
     //                    从url中提取cursor 用于实现分页逻辑
     const cursor = req.nextUrl.searchParams.get("cursor") || undefined;
     const pageSize = 10;
-    await new Promise((r) => setTimeout(r, 2000));
     const { user } = await validateRequest();
     if (!user) {
       // 返回值
